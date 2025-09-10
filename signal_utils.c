@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signal_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/09 14:09:42 by kenakamu          #+#    #+#             */
+/*   Updated: 2025/09/09 14:38:13 by kenakamu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minitalk.h"
 
+volatile sig_atomic_t	g_server_act = 0;
 
-volatile sig_atomic_t g_task_end = 0;
-
-void	setup_sigactoion(struct sigaction *sa, void (*handler)(int, siginfo_t *, void *))
+void	setup_sigactoion(struct sigaction *sa,
+		void (*handler)(int, siginfo_t *, void *))
 {
 	sa->sa_sigaction = handler;
 	sa->sa_flags = SA_SIGINFO;
@@ -16,17 +28,16 @@ void	client_task_end_handler(int signum, siginfo_t *info, void *context)
 	(void)context;
 	if (signum == SIGUSR1)
 	{
-		g_task_end = 1;
+		g_server_act = 1;
 	}
 }
 
 void	signal_handler(int signum, siginfo_t *info, void *context)
 {
-	static unsigned char c;
-	static int	bit_counter = 0;
-	
-	(void)context;
+	static unsigned char	c;
+	static int				bit_counter = 0;
 
+	(void)context;
 	if (signum == SIGUSR1)
 	{
 		c = c >> 1;
@@ -43,4 +54,4 @@ void	signal_handler(int signum, siginfo_t *info, void *context)
 		c = 0;
 	}
 	kill(info->si_pid, SIGUSR1);
-}	
+}
