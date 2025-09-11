@@ -6,7 +6,7 @@
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 14:09:31 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/09/11 18:40:22 by kenakamu         ###   ########.fr       */
+/*   Updated: 2025/09/12 07:56:47 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	wait_for_server_response(unsigned char *c_ptr)
 	*c_ptr = *c_ptr >> 1;
 	
 	if (len <= 150000)
-		usleep (30);
+		usleep (2);
 	else
 		usleep (30 * len / 150000);
 	return (0);
