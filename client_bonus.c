@@ -6,11 +6,11 @@
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 14:09:31 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/09/11 02:01:49 by kenakamu         ###   ########.fr       */
+/*   Updated: 2025/09/11 18:40:22 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk_bonus.h"
+#include "minitalk.h"
 
 static int	wait_for_server_response(unsigned char *c_ptr, int s_len)
 {
@@ -33,31 +33,25 @@ static int	wait_for_server_response(unsigned char *c_ptr, int s_len)
 	else
 		usleep (30 * s_len / 150000);
 	return (0);
-} //still beta
+}
 
 static int	send_char_bits(pid_t pid, unsigned char c, int s_len)
 {
 	size_t	n;
+	int		signal;
 
 	n = 8;
 	while (n--)
 	{
 		g_server_act = 0;
 		if (!(c & 1))
-		{
-			if (kill(pid, SIGUSR1) == -1)
-			{
-				write(STDERR_FILENO, "Error: Failed to send signal\n", 30);
-				return (-1);
-			}
-		}
+			signal = SIGUSR1;
 		else
+			signal = SIGUSR2;
+		if (kill(pid, signal) == -1)
 		{
-			if (kill(pid, SIGUSR2) == -1)
-			{
-				write(STDERR_FILENO, "Error: Failed to send signal\n", 30);
-				return (-1);
-			}
+			write(STDERR_FILENO, "Error: Failed to send signal\n", 30);
+			return (-1);
 		}
 		if (wait_for_server_response(&c, s_len) == -1)
 			return (-1);
@@ -115,11 +109,11 @@ static int	validate_and_run_client(const char *pid_str, char *content)
 	}
 	if (client(pid, content) == -1)
 	{
-		write(STDOUT_FILENO, "Error\n", 6);
+		// write(STDOUT_FILENO, "Error\n", 6);
 		return (-1);
 	}
 	return (0);
-}//returnに問題あり
+}
 
 int	main(int arc, char **arv)
 {
