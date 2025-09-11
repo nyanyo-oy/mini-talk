@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 static int	wait_for_server_response(unsigned char *c_ptr, int s_len)
 {
