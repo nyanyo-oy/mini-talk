@@ -6,7 +6,7 @@
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 14:09:31 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/09/12 09:02:35 by kenakamu         ###   ########.fr       */
+/*   Updated: 2025/09/12 09:01:16 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	wait_for_server_response(unsigned char *c_ptr)
 {
-	int	timeout_counter;
+	int		timeout_counter;
 
 	timeout_counter = 0;
 	while (!g_server_act && timeout_counter < 5000)
