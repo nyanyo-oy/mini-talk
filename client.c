@@ -6,7 +6,7 @@
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 14:09:31 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/09/12 07:56:47 by kenakamu         ###   ########.fr       */
+/*   Updated: 2025/09/12 09:02:35 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 static int	wait_for_server_response(unsigned char *c_ptr)
 {
-	int		timeout_counter;
-	static int	len = 0;
-	len++;
+	int	timeout_counter;
 
 	timeout_counter = 0;
 	while (!g_server_act && timeout_counter < 5000)
@@ -30,11 +28,6 @@ static int	wait_for_server_response(unsigned char *c_ptr)
 		return (-1);
 	}
 	*c_ptr = *c_ptr >> 1;
-	
-	if (len <= 150000)
-		usleep (2);
-	else
-		usleep (30 * len / 150000);
 	return (0);
 }
 
@@ -42,7 +35,7 @@ static int	send_char_bits(pid_t pid, unsigned char c)
 {
 	size_t	n;
 	int		signal;
-	
+
 	n = 8;
 	while (n--)
 	{
@@ -69,22 +62,15 @@ int	client(pid_t pid, char *str)
 
 	setup_sigactoion(&sa, client_task_end_handler);
 	sigaction(SIGUSR1, &sa, NULL);
-	
 	i = 0;
 	while (str[i])
 	{
 		if (send_char_bits(pid, str[i]) == -1)
-		{
-			// write(STDOUT_FILENO, "Error\n", 6);
 			return (-1);
-		}
 		i++;
 	}
 	if (send_char_bits(pid, '\n') == -1)
-	{
-		// write(STDOUT_FILENO, "Error\n", 6);
 		return (-1);
-	}
 	return (0);
 }
 
@@ -110,23 +96,17 @@ static int	validate_and_run_client(const char *pid_str, char *content)
 		return (-1);
 	}
 	if (client(pid, content) == -1)
-	{
-		// write(STDOUT_FILENO, "Error\n", 6);
 		return (-1);
-	}
 	return (0);
 }
 
 int	main(int arc, char **arv)
 {
-	int		ret;
-
 	if (arc == 3)
-		ret = validate_and_run_client(arv[1], arv[2]);
+		return (validate_and_run_client(arv[1], arv[2]));
 	else
 	{
 		write(STDOUT_FILENO, "Error\n", 6);
-		ret = -1;
+		return (-1);
 	}
-	return (ret);
 }
