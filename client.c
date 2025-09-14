@@ -82,7 +82,7 @@ static int	validate_and_run_client(const char *pid_str, char *content)
 	i = 0;
 	while (pid_str[i])
 	{
-		if (ft_isdigit(pid_str[i]) == FAILURE)
+		if (ft_isdigit(pid_str[i]) == false)
 		{
 			write(STDOUT_FILENO, "Error\n", 6);
 			return (-1);

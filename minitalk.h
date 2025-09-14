@@ -10,12 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "libft/libft.h"
-#include <signal.h>
+#ifndef MINITALK_H
+# define MINITALK_H
 
-#define SUCSSES 1
-#define FAILURE 0
+# include <unistd.h>
+# include "libft/libft.h"
+# include <signal.h>
+# include <stdbool.h>
 
 extern volatile sig_atomic_t	g_server_act;
 
@@ -26,3 +27,5 @@ void	setup_sigactoion(struct sigaction *sa,
 			void (*handler)(int, siginfo_t *, void *));
 void	signal_handler(int signum, siginfo_t *info, void *context);
 void	client_task_end_handler(int signum, siginfo_t *info, void *context);
+
+#endif
