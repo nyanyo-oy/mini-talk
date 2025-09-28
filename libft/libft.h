@@ -6,7 +6,7 @@
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:16:07 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/09/09 16:13:14 by kenakamu         ###   ########.fr       */
+/*   Updated: 2025/09/12 13:26:01 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <string.h>
+# include <stdbool.h>
 
 # include "printf/ft_printf/ft_printf.h"
 
@@ -69,5 +70,10 @@ void			ft_putnbr_fd(int n, int fd);
 
 char			**split_spht(char *str);
 void			free_ptrr(char **ptrr);
+size_t			ft_ptrrlen(char **ptrr);
+int				ft_strcmp(const char *s1, const char *s2);
 
+int				ft_ascii_to_num(char c);
+bool			ft_isspace(int c);
+double			ft_atof_lite(const char *nptr);
 #endif
