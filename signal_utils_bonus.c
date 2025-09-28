@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal_utils.c                                     :+:      :+:    :+:   */
+/*   signal_utils_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 14:09:42 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/09/09 14:38:13 by kenakamu         ###   ########.fr       */
+/*   Updated: 2025/09/28 22:23:21 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 volatile sig_atomic_t	g_server_act = 0;
 
-void	setup_sigactoion(struct sigaction *sa,
+void	setup_sigaction(struct sigaction *sa,
 		void (*handler)(int, siginfo_t *, void *))
 {
 	sa->sa_sigaction = handler;

@@ -6,7 +6,7 @@
 /*   By: kenakamu <kenakamu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 14:09:31 by kenakamu          #+#    #+#             */
-/*   Updated: 2025/09/12 09:01:16 by kenakamu         ###   ########.fr       */
+/*   Updated: 2025/09/28 22:25:48 by kenakamu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	wait_for_server_response(unsigned char *c_ptr)
 	}
 	if (!g_server_act)
 	{
-		write(STDOUT_FILENO, "Error: Server response timeout\n", 32);
+		write(STDERR_FILENO, "Error: Server response timeout\n", 32);
 		return (-1);
 	}
 	*c_ptr = *c_ptr >> 1;
@@ -60,7 +60,7 @@ int	client(pid_t pid, char *str)
 	size_t				i;
 	struct sigaction	sa;
 
-	setup_sigactoion(&sa, client_task_end_handler);
+	setup_sigaction(&sa, client_task_end_handler);
 	sigaction(SIGUSR1, &sa, NULL);
 	i = 0;
 	while (str[i])
@@ -84,7 +84,7 @@ static int	validate_and_run_client(const char *pid_str, char *content)
 	{
 		if (ft_isdigit(pid_str[i]) == false)
 		{
-			write(STDOUT_FILENO, "Error\n", 6);
+			write(STDERR_FILENO, "Error\n", 6);
 			return (-1);
 		}
 		i++;
@@ -92,7 +92,7 @@ static int	validate_and_run_client(const char *pid_str, char *content)
 	pid = (pid_t)ft_atoi(pid_str);
 	if (pid <= 0)
 	{
-		write(STDOUT_FILENO, "Error\n", 6);
+		write(STDERR_FILENO, "Error\n", 6);
 		return (-1);
 	}
 	if (client(pid, content) == -1)
@@ -106,7 +106,7 @@ int	main(int arc, char **arv)
 		return (validate_and_run_client(arv[1], arv[2]));
 	else
 	{
-		write(STDOUT_FILENO, "Error\n", 6);
+		write(STDERR_FILENO, "Error\n", 6);
 		return (-1);
 	}
 }
